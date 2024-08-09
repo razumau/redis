@@ -1,27 +1,24 @@
-app = "redis-example"
+# fly.toml app configuration file generated for redis-rating-ui on 2023-12-24T18:41:24+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
-[mounts]
-  destination = "/data"
-  source = "redis_server"
-
-[metrics]
-  port = 9091
-  path = "/metrics"
-
-# Use the Docker image instead of building from source
+app = "redis-rating-ui"
+primary_region = "waw"
 
 [build]
   image = "flyio/redis:6.2.6"
 
-# Uncomment these lines for public internet access to Redis on port 10000
-#
-# [[services]]
-# internal_port = 6379
-# protocol      = "tcp"
+[[mounts]]
+  source = "redis_rating_ui"
+  destination = "/data"
+  auto_extend_size_threshold = 0
 
-#   [[services.ports]]
-#   port     = "10000"
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256
 
-#   [[services.tcp_checks]]
-#   interval = 10000
-#   timeout  = 2000
+[[metrics]]
+  port = 9091
+  path = "/metrics"
